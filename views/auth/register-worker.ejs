@@ -1,0 +1,64 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3">
+          <i class="fas fa-user-plus"></i> Register
+        </h1>
+        <form method="post" action="/auth/register-worker">
+            <div class="mb-3">
+            <!-- <label for="fname" class="form-label">First Name</label> -->
+            <input type="text" name="fname" class="form-control" id="fname" placeholder="first name">
+            </div>
+    
+            <div class="mb-3">
+            <!-- <label for="surname" class="form-label">Surname</label> -->
+            <input type="text" name="surname" class="form-control" id="surname" " placeholder="surname">
+            </div>
+    
+            <div class="mb-3">
+                <small class="form-text text-muted invalid_email">Invalid Email Address</small>
+                <!-- <label for="email" class="form-label">Email</label> -->
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+            </div>
+    
+            <div class="mb-3">
+                <!-- <label for="age" class="form-label">Age</label> -->
+                <input type="number" name="age" class="form-control" id="age" min="18" max="70" placeholder="age">
+            </div>
+    
+            <div class="mb-3 mt-3">
+                <select class="form-control" name="gender">
+                    <option selected>Select Your gender</option>
+                    <option value="male">Male</option>
+                    <option value="2">Female</option>
+                  </select>
+            </div>
+            
+            <div class="mb-3">
+                <input type="hidden" name="cadre" class="form-control" id="cadre" value="doctor">
+            </div>
+    
+            <div class="mb-3">
+                <input type="hidden" name="department" class="form-control" id="department" value="medicine">
+            </div>
+    
+            <div class="mb-3">
+                <!-- <label for="password" class="form-label">Password</label> -->
+                <input type="password" name="password" class="form-control" id="password" " placeholder="password">
+            </div>
+    
+            <div class="mb-3">
+                <!-- <label for="confirm_password" class="form-label">Confirm Password</label> -->
+                <input type="password" name="confirm_password" class="form-control" id="confirm_password" " placeholder="confirm password">
+            </div>
+    
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    
+        <p class="lead mt-4">
+            Already have an account? <a href="/auth/login"> Sign In</a>
+        </p>
+        
+    </div>
+    </div>
+    </div>
