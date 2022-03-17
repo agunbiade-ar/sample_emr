@@ -1,22 +1,32 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
+const { ensureLoginAuthenticated, ensureExceptLogOut } = require('../config/auth')
 
 let Worker = require('../models/worker')
 
-router.get('/login', function(req, res){
+router.get('/login', ensureExceptLogOut, function(req, res){
     res.render('auth/login')
 })
 
-router.get('/register', function(req, res){
+router.post('/login', ensureExceptLogOut, function(req, res, next){
+    passport.authenticate('local', {
+        successRedirect: '/welcome',
+        failureRedirect: '/auth/login',
+        failureFlash: true
+    })(req, res, next)
+})
+
+router.get('/register', ensureExceptLogOut, function(req, res){
     res.render('auth/register')
 })
 
-router.get('/register-worker', function(req, res){
+router.get('/register-worker', ensureExceptLogOut, function(req, res){
     res.render('auth/register-worker')
 })
 
-router.post('/register-worker', function(req, res){
+router.post('/register-worker', ensureExceptLogOut, function(req, res){
 let errors = []
 
     const { fname, surname, email, age, gender, password, confirm_password, cadre, department } = req.body
@@ -40,7 +50,7 @@ let errors = []
         Worker.findOne({ email: email}).then( function(user){
             if(user) 
             {
-                errors.push({msg: 'That email already registered'})
+                errors.push({msg: 'That email is already registered'})
             
             res.render('auth/register-worker', {
                 errors, fname, surname, email, age, gender, password, confirm_password
@@ -70,6 +80,12 @@ let errors = []
         })
     }
 
+})
+
+router.get('/logout', function(req, res){
+    req.logout()
+    req.flash('success_msg', 'You have been logged out successfully')
+    res.redirect('/auth/login')
 })
 
 module.exports = router

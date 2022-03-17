@@ -11,6 +11,10 @@ const session = require('express-session')
 
 let port = (process.env.PORT != undefined) ? process.env.PORT : 3000; 
 
+//passport config
+const passport = require('passport')
+const passport_config_worker = require('./config/passport-config-worker')(passport)
+
 const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
 
@@ -28,6 +32,18 @@ app.use(session({
     resave: false, 
     saveUninitialized: false
 }))
+
+//passport middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
+  //global variables
+  app.use( function(req, res, next){
+    res.locals.success_msg = req.flash('success_msg')
+    res.locals.error_msg = req.flash('error_msg')
+    res.locals.error = req.flash('error')
+    next()
+})
 
 mongoose.connect(process.env.DATABASE_URL)
 const db = mongoose.connection
